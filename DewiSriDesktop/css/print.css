@@ -1,5 +1,6 @@
 @charset "UTF-8";
 /* CSS Document */
+
 body{
 font-family:"Courier New", Courier, monospace;
 font-size:22px;
@@ -17,6 +18,11 @@ visibility:hidden;
 button{
 	visibility:hidden;
 	}
+/*
+	TODO 
+	clear table border
+	add border bottom to each row
+*/
 table{
 	border:1px #000 solid;
 	}

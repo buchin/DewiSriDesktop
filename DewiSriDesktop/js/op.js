@@ -28,6 +28,53 @@ $(document).ready(function(){
 		$.blockUI({message:$('#opsupp')});
 	});
 	
+	//penjualan hari ini
+	$("#op button[name='penjualan']").click(function(){
+		populatePenjualan('hari');
+		$.blockUI({message:$("#oppenjualan")});
+	});
+	$('#oppenjualan button[name="print"]').click(function() {		
+		printLaporanPenjualan("Laporan Penjualan", 'css/print.css');	
+	});
+	function populatePenjualan(tipe){
+		$("#oppenjualantable").jqGrid({ 
+						datatype: "local", 
+						height: 250, 
+						loadtext:"Loading...",
+						colNames:['Nama Menu','Harga', 'Jumlah', 'Total'], 
+						colModel:[ 
+								  {name:'namamenu',index:'namamenu', width:100, sorttype:"int"}, 
+								  {name:'harga',index:'harga', width:100}, 
+								  {name:'jumlah',index:'jumlah', width:50},
+								  {name:'total',index:'total', width:150}
+								  ], 
+						multiselect: false, 
+						caption: "Laporan Penjualan",
+						onSelectRow: function(id){
+							//var ret = $('#opsalreporttable').jqGrid('getRowData',id);
+							//username = ret.username;
+							//populateOpSaleReportTable("username");
+							//$.blockUI({message:$('#opsalreport')});
+						}
+					});
+			//alert(tipe);
+			if (tipe=='hari') {
+				$.getJSON("http://localhost/ajaxlogin.php?cmd=getPenjualanHariIni", function(data){
+					var oke = 0;
+					var todaySales = 0;
+					//$("#opsalreporttotal").html(JSON.stringify(data));
+						$("#oppenjualantable").clearGridData();
+							$.each(data, function(i,val){
+							//alert(JSON.stringify(val));
+							$("#oppenjualantable").jqGrid('addRowData', oke,val);
+							todaySales +=parseInt(val.total);
+							oke++;
+							});													 
+					$("#oppenjualantotal").html("Total: " + todaySales+"");
+				});
+			}
+
+	}
 	//sales
 	$("#op button[name='sales']").click(function(){
 		populateOpSalesTable();
@@ -319,6 +366,60 @@ $(document).ready(function(){
 			$("#opmenusertable").jqGrid('addRowData', oke,{"group":"semua"});			
 		});
 	}
+
+	function printLaporanPenjualan(htmlTitle, printCSSFile)
+	{			
+		var locFileStream = false,
+			styleFile = air.File.applicationDirectory;
+			locStyles = '';
+	
+		/* fetch css definitions for print stylesheet and store in locStyles */
+		styleFile = styleFile.resolvePath(printCSSFile);
+	
+		locFileStream = new air.FileStream();
+		locFileStream.open(styleFile, air.FileMode.READ);
+		locStyles = locFileStream.readUTFBytes(locFileStream.bytesAvailable);
+		locFileStream.close();
+	
+		/* HTML to string */
+		locHTML = $('#oppenjualan').html();
+	
+		/* wrap with doc tags, add "window.print" to the onload */
+		locHTML = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">' +
+				'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">' +
+				'<head>' +
+				'<title>' + htmlTitle + '</title>' +
+				'<style type="text/css">' +
+				locStyles +
+				'</style>' +
+				'</head>' +
+				'<body onload="window.print()">' +
+					locHTML +
+				'</body>' +
+				'</html>';
+	
+		/* output the file to a temporary file in user's docs, launch url in native browser
+			TODO: delete tmp file after launch
+		*/
+		var tmpFile = air.File.documentsDirectory;
+		tmpFile = tmpFile.resolvePath("temp.html");
+		tmpURLToOpen = tmpFile.url;
+	
+		var tmpFileStream = new air.FileStream();
+		tmpFileStream.open(tmpFile, air.FileMode.WRITE);
+		tmpFileStream.writeUTFBytes(locHTML);
+		tmpFileStream.close();
+	
+		var locURLReq = new air.URLRequest(tmpURLToOpen);
+		air.navigateToURL(locURLReq);
+	
+		/* null objects */
+		locURLReq = null;
+		tmpFileStream = null;
+		locFileStream = null;
+		styleFile = null;
+	}
+
 	
 	function printThisReport(htmlTitle, printCSSFile)
 	{			
