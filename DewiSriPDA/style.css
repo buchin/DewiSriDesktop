@@ -1,0 +1,159 @@
+@media handheld and (max-device-width: 240px), screen and (max-device-width: 240px) {}
+/******************************* Global Style ***********************/
+html { 
+	width: 99%; 
+	margin:0; 
+}
+
+h1, h2, h3 { 
+	margin: 0px;
+}
+
+h1 {
+	text-align:center;
+}
+
+h3 { 
+	margin-top: 2em; 
+}
+	
+img { 
+	max-width: 95%;
+}
+
+.container {
+	padding-bottom:20px;
+}
+
+.header {
+	display:block;
+	width:99%;
+	padding:4px 0px 10px 0px;
+}
+
+.header_left {
+	float:left;
+}
+.repick {
+	font-size:15px;
+	padding:5px 0px;
+	float:right;
+}
+
+.field {
+	color:#222222;
+	font-size:18px;
+	font-weight:normal;
+	margin:4px 0px 10px 0px;
+	padding:8px 5px;
+	width:95%;
+	border:1px solid black;
+	height:20px;
+}
+
+.submit {
+	margin:0px 30%;
+	font-size:15px;
+	padding:8px 22px;
+}
+/******************************** Number Input ********************************/
+
+.number_input {
+	float:left;
+	width:67px;
+	height:45px;
+	margin:3px;
+	font-size:16px;
+}
+
+.number_submit {
+	width:139px;
+}
+
+/******************************** Meja ***************************************/
+.meja {
+	width:99%;
+	padding:9px;
+	font-size:18px;
+	margin-bottom:5px;
+}
+
+.index {
+	width:99%;
+	padding:9px;
+	font-size:18px;
+	margin-bottom:5px;
+}
+
+#meja_lesehan_container,#meja_pendopo_container {
+	display:none;
+}
+
+.meja_item {
+	float:left;
+	width:49px;
+	height:49px;
+	margin:3px;
+	font-size:16px;
+}
+
+/********************************* Pesanan ************************************/
+.pesanan {
+	margin-bottom:4px;
+	border:2px solid #ccc;
+	padding:5px 2px;
+}
+
+.pesanan_desc {
+	float:left;
+	width:180px;
+}
+
+.pesanan_remark {
+	width:100%;
+	font-size:16px;
+	text-height:30px;
+}
+
+.pesanan_desc_remark {
+	clear:both;
+	float:left;
+}
+
+.pesanan_hapus {
+	float:right;
+	width:30px;
+	height:30px;
+}
+.tambah_pesanan_btn {
+	width:100%;
+	height:40px;
+	font-size:13px;
+}
+
+.daftar_menu,.jumlah_menu {
+	display:none;
+}
+.menu_item,.menu_group {
+	width:100%;
+	height:40px;
+	font-size:13px;
+}
+.menu_item_container {
+	display:none;
+}
+
+#s_simpan {
+	float:left;
+	width:100%;
+	height:49px;
+	margin:3px;
+	font-size:14px;
+}
+
+.cancel_menu {
+	font-size:15px;
+	padding:5px 10px;
+	float:right;
+	margin-left:10px;
+}
