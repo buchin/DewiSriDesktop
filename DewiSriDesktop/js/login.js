@@ -1307,6 +1307,25 @@ $(document).ready(function(){
 		
 	});
 	
+	$('#bo-payout button[name="hapuspayout"]').click(function(){
+		//alert("Menghapus Pengeluaran");
+			var gr = $("#bo-payout-table").jqGrid('getGridParam','selrow'); 
+			if(gr!=null){
+				var ret = $("#bo-payout-table").jqGrid('getRowData',gr);
+				var payout = new Object();
+				payout.id = ret.id;
+				//order.printstatus = "printed";
+				strJSON = JSON.stringify(payout);
+				alert(strJSON);
+				$.getJSON("http://localhost/ajaxlogin.php?cmd=delPayout",{data:strJSON}, function(data){
+					alert(JSON.stringify("Sukses Menghapus Pengeluaran"));
+					boPayoutFillPayout();
+				});
+
+				}
+		
+	});
+	
 	$('#bo-payout-baru button[name="reset"]').click(function(){
 		$('#bo-payout-baru input[name="jumlah"]').val("");
 		$('#bo-payout-baru input[name="keterangan"]').val("");
@@ -2229,10 +2248,11 @@ $(document).ready(function(){
 					datatype: "local", 
 					height: 250, 
 					loadtext:"Loading...",
-					colNames:['jumlah','Keterangan','Open'], 
+					colNames:['id','jumlah','Keterangan','Open'], 
 					colModel:[ 
-							  {name:'jumlah',index:'jumlah', width:100, sorttype:"int"}, 
-							  {name:'keterangan',index:'keterangan', width:300},
+							{name:'id',index:'id', width:50, sorttype:"int"},   
+							{name:'jumlah',index:'jumlah', width:100, sorttype:"int"}, 
+							  {name:'keterangan',index:'keterangan', width:250},
 							  {name:'open',index:'open',width:100}
 							  ], 
 					multiselect: false, 

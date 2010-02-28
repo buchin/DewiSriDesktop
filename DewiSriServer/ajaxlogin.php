@@ -247,7 +247,19 @@ session_start();
 		case 'getPenjualanHariIni':
 			getPenjualanHariIni();
 		break;
+		case 'delPayout':
+			# code...
+			$jum = json_decode($_GET['data']);
+			delPayout($jum);
+			break;
 		}
+function delPayout($data)
+{
+	# code...
+	require("inc/init.php");
+	$payout = $redbean->load("payout",$data->{'id'});
+	echo json_encode($redbean->trash($payout));
+}		
 function getPenjualanHariIni()
 {
 	# code...
