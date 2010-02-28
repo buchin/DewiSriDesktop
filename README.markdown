@@ -28,4 +28,4 @@ Todo
 11. Revisi IV
 12. Dine In/Take Home status nota tidak refresh jika tidak login
 13. Dine In print pertama kali tidak keluar keterangan / remarknya
-14. Menghapus pengeluaran karena 2 kali pencet 
+14. [Resolved]Menghapus pengeluaran karena 2 kali pencet
