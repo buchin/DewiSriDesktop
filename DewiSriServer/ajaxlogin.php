@@ -470,21 +470,37 @@ function getGroupByName($data) {
 
 function getSettleByUser($data){
 	require("inc/init.php");
-	$query = "SELECT `id`,`username`,  `completed`,`sesudah` FROM `settle` WHERE "; 
+	//$query = "SELECT `id`,`username`,  `completed`,`sesudah` FROM `settle` WHERE "; 
+	$date = $data->{'date_dari'} ." 00:00:00";		
+	$date2 = $data->{'date_sampai'} . " 23:59:59";
+	$q = "SELECT 
+		ordermenu.menu as namamenu, 
+		ordermenu.harga as harga, 
+		sum(ordermenu.jumlah) as jumlah, 
+		(sum(ordermenu.jumlah)*harga) as total  
+		FROM `ordermenu`,`order` 
+		where ordermenu.orderid = order.id 
+		and order.status='completed' 
+		and order.completed <= '" . $date2 . "' 
+		and order.completed >= '" . $date . "'";
+		if($data->{'username'}=="semua"){			
+			// do nothing
+		}
+		else if($data->{'username'} != "semua"){
+			// tambahkan filter username
+			$q .= " AND order.username='". $data->{'username'} ."'";			
+		}
+		$q .= " group by namamenu order by namamenu asc";
+
 	
-	$date = $data->{'date_dari'};		
-	$date2 = $data->{'date_sampai'};		
-	$query .= "`completed` <= "."'". $date2 ." 23:59:59' AND `completed` >= '". $date ." 00:00:00'";
 		
-	if($data->{'username'}=="semua"){			
-		// do nothing
-	}
-	else if($data->{'username'} != "semua"){
-		// tambahkan filter username
-		$query .= " AND `username`='". $data->{'username'} ."'";			
-	}
+	//$query .= "`completed` <= "."'". $date2 ." 23:59:59' AND `completed` >= '". $date ." 00:00:00'";
+		
 	
-	$keys = $adapter->get($query);	//echo $query;						
+	
+	$keys = $adapter->get($q);	//
+	//echo $query;
+	//echo $q;						
 	echo json_encode($keys);
 }
 

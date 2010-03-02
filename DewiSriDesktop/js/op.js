@@ -1,16 +1,18 @@
 // JavaScript Document
 $(document).ready(function(){
+	var date_dari = new Object;
+	var date_sampai = new Object;
 	var gr = $("#opsalusertable").jqGrid('getGridParam','selrow'); 
 	$("#opsalreporttable").jqGrid({ 
 					datatype: "local", 
 					height: 250, 
 					loadtext:"Loading...",
-					colNames:['ID','Username', 'Tanggal', 'Banyaknya'], 
+					colNames:['Menu','Harga', 'Jumlah', 'Total'], 
 					colModel:[ 
-							  {name:'id',index:'id', width:60, sorttype:"int"}, 
-							  {name:'username',index:'username', width:150}, 
-							  {name:'completed',index:'completed', width:150},
-							  {name:'sesudah',index:'sesudah', width:150}
+							  {name:'namamenu',index:'namamenu', width:150, sorttype:"int"}, 
+							  {name:'harga',index:'harga', width:100}, 
+							  {name:'jumlah',index:'jumlah', width:50},
+							  {name:'total',index:'total', width:100}
 							  ], 
 					multiselect: false, 
 					caption: "Sales Report",
@@ -123,7 +125,7 @@ $(document).ready(function(){
 		$.blockUI({message:$('#opsalreport')});
 	});
 	
-	function populateOpSaleReportTable(date,username){
+	function OpopulateOpSaleReportTable(date,username){
 		
 		//var okedeh = new Object();
 		//alert(username);
@@ -151,7 +153,7 @@ $(document).ready(function(){
 		
 		});
 		}
-	<!--awal tambahan -------------------------------------------------------*/
+	//awal tambahan -------------------------------------------------------
 	
 	//menu 
 	$("#op button[name='menu']").click(function(){
@@ -168,14 +170,50 @@ $(document).ready(function(){
 		
 		$.blockUI({message:$('#opmenreport')});
 	});	
+	date_dari.bln = '01';
+	date_dari.thn = '2010';
+	date_dari.tgl = '01';
+	date_sampai.bln = '01';
+	date_sampai.thn = '2010';
+	date_sampai.tgl = '01';
+	$('.date_dari .dd_bln').change(function(){
+		//alert($(this).val());
+		date_dari.bln = $(this).val();
+	});
 	
+	$('.date_dari .dd_thn').change(function(){
+		//alert($(this).val());
+		date_dari.thn = $(this).val();
+	});
+	
+	$('.date_dari .dd_tgl').change(function(){
+		//alert($(this).val());
+		date_dari.tgl = $(this).val();
+	});
+	
+	$('.date_sampai .dd_bln').change(function(){
+		//alert($(this).val());
+		date_sampai.bln = $(this).val();
+	});
+	
+	$('.date_sampai .dd_thn').change(function(){
+		//alert($(this).val());
+		date_sampai.thn = $(this).val();
+	});
+	
+	$('.date_sampai .dd_tgl').change(function(){
+		//alert($(this).val());
+		date_sampai.tgl = $(this).val();
+	});
 	$('#opsal button[name="reportok"]').click(function(){
 		var gr = $("#opsalusertable").jqGrid('getGridParam','selrow'); 
 		if(gr!=null){
 			var ret = $("#opsalusertable").jqGrid('getRowData',gr);
 			var date = new Array();
-			date.push($('.date_dari .dd_thn').val() + '-' + $('.date_dari .dd_bln').val() + '-' + $('.date_dari .dd_tgl').val());
-			date.push($('.date_sampai .dd_thn').val() + '-' + $('.date_sampai .dd_bln').val() + '-' + $('.date_sampai .dd_tgl').val());			
+			date.push(date_dari.thn + '-' + date_dari.bln+ '-' + date_dari.tgl);			
+			date.push(date_sampai.thn + '-' + date_sampai.bln + '-' + date_sampai.tgl);
+			//date.push($('.date_sampai .dd_thn').val() + '-' + $('.date_sampai .dd_bln').val() + '-' + $('.date_sampai .dd_tgl').val());			
+		
 			populateOpSaleReportTable(date, ret.username);
 			}
 		
@@ -193,6 +231,7 @@ $(document).ready(function(){
 			var date = new Array();
 			date.push($('.date_dari .dd_thn').val() + '-' + $('.date_dari .dd_bln').val() + '-' + $('.date_dari .dd_tgl').val());
 			date.push($('.date_sampai .dd_thn').val() + '-' + $('.date_sampai .dd_bln').val() + '-' + $('.date_sampai .dd_tgl').val());			
+			
 			populateOpMenuSubReportTable(date, ret.namamenu);
 			}
 		
@@ -211,6 +250,7 @@ $(document).ready(function(){
 		okedeh.date_dari = date[0];
 		okedeh.date_sampai = date[1];
 		okedeh.username = username;
+		$('#opsalreport h2').html("Periode "+ date[0] +" / "+ date[1] +" <br/>user: "+ username);
 		strJSON = JSON.stringify(okedeh);
 		//alert(strJSON);
 		$.getJSON("http://localhost/ajaxlogin.php?cmd=getSettleByUserTotal",{data:strJSON}, function(data){
@@ -219,13 +259,17 @@ $(document).ready(function(){
 		
 		$.getJSON("http://localhost/ajaxlogin.php?cmd=getSettleByUser",{data:strJSON}, function(data){
 			var oke = 0;
+			var sales = 0;
+			//alert(JSON.stringify(data));
 			//$("#opsalreporttotal").html(JSON.stringify(data));
 				$("#opsalreporttable").clearGridData();
 					$.each(data, function(i,val){
 					//alert(JSON.stringify(val));
 					$("#opsalreporttable").jqGrid('addRowData', oke,val);
+					sales +=parseInt(val.total);
 					oke++;
-				});													 
+				});					
+				$("#opsalreporttotal").html("<h3>Total penjualan: Rp." +sales+"</h3>");								 
 		
 		});
 		}

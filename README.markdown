@@ -5,7 +5,7 @@ Todo
 	2. Sementara bikin field dummy dulu:
 		1. Field: Nama, Alamat, Tanggal, Jam, Meja, Tanggal Pemesanan
 		2. Menu: Reservasi Baru, Lihat Reservasi
-2. Perubahan Report Sales
+2. [Resolved]Perubahan Report Sales
 3. Perubahan Report Menu
 4. Perbaikan hasil print user+meja di nota
 5. Cek penjualan CP/Kasir via PDA
