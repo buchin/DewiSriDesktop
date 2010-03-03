@@ -6,7 +6,7 @@ Todo
 		1. Field: Nama, Alamat, Tanggal, Jam, Meja, Tanggal Pemesanan
 		2. Menu: Reservasi Baru, Lihat Reservasi
 2. [Resolved]Perubahan Report Sales
-14. [Resolved]Perubahan Report Menu
+3. [Resolved]Perubahan Report Menu
 4. Perbaikan hasil print user+meja di nota
 5. Cek penjualan CP/Kasir via PDA
 6. Merapikan jumlah angka di struk pembayaran
@@ -27,4 +27,5 @@ Todo
 		5. Tombol Lihat Penjualan
 11. Dine In/Take Home status nota tidak refresh jika tidak login
 12. Dine In print pertama kali tidak keluar keterangan / remarknya
-13. [Resolved]Menghapus pengeluaran karena 2 kali pencet
+13. Ada jumlah tamu di nota print 
+14. [Resolved]Menghapus pengeluaran karena 2 kali pencet
