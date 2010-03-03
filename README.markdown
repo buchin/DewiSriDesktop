@@ -27,5 +27,5 @@ Todo
 		5. Tombol Lihat Penjualan
 11. Dine In/Take Home status nota tidak refresh jika tidak login
 12. Dine In print pertama kali tidak keluar keterangan / remarknya
-13. Ada jumlah tamu di nota print 
+13. [Resolved]Ada jumlah tamu di nota print 
 14. [Resolved]Menghapus pengeluaran karena 2 kali pencet

@@ -84,6 +84,8 @@ $(document).ready(function(){
 			$('#notanamameja').html("Nama Meja: "+ val.namameja);
 //        <p id="notausername"></p>
 			$('#notausername').html("User: "+ val.username);
+			$('#notajmltamu').html("Jumlah Tamu: "+ val.jumlahtamu+"");
+			
 			});
 			
 		});
@@ -197,6 +199,7 @@ $(document).ready(function(){
 		$('#notakembali').html('');
 //        <p>Harga Setelah PPN dan Diskon:<strong><span id="hargasetelahppndandiskon"></span></strong></p>
 		$('#hargasetelahppndandiskon').html('');
+		$('#notajmltamu').html("");
 	}
 	
 });
