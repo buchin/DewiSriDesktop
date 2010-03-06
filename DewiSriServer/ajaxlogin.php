@@ -82,6 +82,13 @@ session_start();
 			getMenuByOrderID($jum);			
 		break;
 		
+		case 'getUnprintedMenuByOrderID':
+			$jum = json_decode($_GET['data']);
+			getUnprintedMenuByOrderID($jum);			
+		break;
+		
+
+		
 		case 'getOrderByID':
 			$jum = json_decode($_GET['data']);
 			getOrderByID($jum);			
@@ -222,6 +229,11 @@ session_start();
 			getUnprinted();
 		break;
 		
+		case 'getUnprintedCount':
+			//$jum = json_decode($_GET['data']);
+			getUnprintedCount();
+		break;
+
 		case 'setPrintStatus':
 			$jum = json_decode($_GET['data']);
 			setPrintStatus($jum);
@@ -276,6 +288,8 @@ function delOrderMenuByOrderID($data){
 function setPrintStatus($data){
 	require("inc/init.php");
 	//$menu = $redbean->dispense("menu");
+	$query = "update `ordermenu` set `printstatus` = 'printed' where orderid='" . $data->{'id'} . "'";
+	$adapter->exec($query);
 	$query = "update `order` set `printstatus` = 'printed' where id='" . $data->{'id'} . "'";
 	$adapter->exec($query);
 	$return = array(
@@ -292,6 +306,13 @@ function getUnprinted(){
 	$semuaorder = $redbean->batch("order",$keys);
 	echo json_encode($semuaorder);
 	}
+function getUnprintedCount(){
+		require("inc/init.php");
+		$query  = "select count(distinct ordermenu.orderid) as jumlah from `ordermenu`,`order` where ordermenu.orderid = order.id and order.open like  '". date('Y-m-d') . "%'  and ordermenu.printstatus is null order by ordermenu.printstatus ASC";
+		$keys = $adapter->get($query);
+		//$semuaorder = $redbean->batch("order",$keys);
+		echo json_encode($keys);
+		}
 function setMenuCost($id){
 	require("inc/init.php");
 	$query  = "select `id` from `resep` where menuid = '" . $id . "'";
@@ -922,6 +943,15 @@ function editorderrecall($data){
 	);
 	echo json_encode($return);
 	}
+	
+function getUnprintedMenuByOrderID($orderid){
+		require("inc/init.php");
+		$query = "select id from `ordermenu` where ordermenu.orderid = '" . $orderid . "' and ordermenu.printstatus is null";
+		$keys = $adapter->getCol($query);
+		$semuaordermenu = $redbean->batch("ordermenu", $keys);
+		echo json_encode($semuaordermenu);
+
+		}
 
 function getOrderByID($orderid){
 	require("inc/init.php");
@@ -1017,6 +1047,7 @@ function orderbaru($data, $username){
 		$ordermenu->jumlah = $jumlah[$i];
 		$ordermenu->harga = $harga[$i];
 		$ordermenu->remark = $remark[$i];
+		$ordermenu->printstatus = 'printed';
 		$ordermenuid = $redbean->store($ordermenu);
 		}
 	

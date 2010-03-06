@@ -5,6 +5,17 @@ $(document).ready(function(){
 		$.blockUI({message:$('#printcontainer'),css:{'width':'450px'}});					   
 	});	
 	
+	var i=0;
+	function displayCount(){
+		$.getJSON("http://localhost/ajaxlogin.php?cmd=getUnprintedCount", function(data){
+				$("#printcount").html(data[0].jumlah);
+			});
+			setTimeout(function(){
+				displayCount(i);
+			},5000);
+	}
+	displayCount();
+	
 	$('#printcontainer button[name="printpls"]').click(function(){
 		printThis("Nota Pesanan", 'css/print.css');	
 		var gr = $("#prtable").jqGrid('getGridParam','selrow'); 
@@ -43,7 +54,7 @@ $(document).ready(function(){
 		$('#hargasetelahppndandiskon').html('');
 		
 		////////alert(orderid);
-		$.getJSON("http://localhost/ajaxlogin.php?cmd=getMenuByOrderID",{data:orderid},function(data){
+		$.getJSON("http://localhost/ajaxlogin.php?cmd=getUnprintedMenuByOrderID",{data:orderid},function(data){
 				////////alert(JSON.stringify(data));	
 				//fill the variables
 				//clear variables
