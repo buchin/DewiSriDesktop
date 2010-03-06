@@ -79,7 +79,7 @@
             <!--<li><a href="#" id="timecard">Time Card</a></li>-->
             <li><a href="#" id="operations">Operations</a></li>
             <li><a href="#" id="backoffice">Back Office</a></li>
-            <li><a href="#" id="print">Print</a></li>
+            <li><a href="#" id="print">Print</a><span id="printcount"></span></li>
             <li><a href="#" id="exitprogram">Exit Program</a></li>
         </ul>
     </div>
@@ -202,7 +202,8 @@
         <li><a href="#">9</a></li>
         <li><a href="#">0</a></li>
         </ul>
-       <button>OK</button>
+      	<button name="back">Kembali</button>
+	<button name="ok">OK</button>
     </div>
     
     <div id="deliveryalamat" style="display:none">
@@ -551,6 +552,7 @@
    <div id="bo-payout" style="display:none">
    <table id="bo-payout-table"></table>
    <button name="tambahpayout">Tambah Payout</button>
+<!--<button name="editpayout">edit Payout</button>-->
    <button name="hapuspayout">Hapus</button>
    <button name="backoffice">Back Office</button>
    <button name="menuutama" class="menuutama">Menu Utama</button>

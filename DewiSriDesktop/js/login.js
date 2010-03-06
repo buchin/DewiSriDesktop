@@ -207,7 +207,7 @@ $(document).ready(function(){
 	$('#pilihmeja .menustyle ul li a').click(function(){
 		namameja = $(this).html();
 		////alert("namameja:"+namameja);
-		$.unblockUI();
+		//$.unblockUI();
 		$("#layoutmejapendopo").hide('slow');
 		$("#layoutmejalesehan").hide('slow');
 		
@@ -271,7 +271,7 @@ $(document).ready(function(){
 		$("#nomorinputinput").val(jumlahorder);
 	});
 	
-	$("#inputnomor button").click(function(){
+	$("#inputnomor button[name='ok']").click(function(){
 		////alert(menu);
 		nomorinput[nomorinput.length]=jumlahorder;
 		//reset nomorinputinput dan nomorinput
@@ -280,6 +280,22 @@ $(document).ready(function(){
 		$.unblockUI();
 		$.blockUI({message:$('#dinein-remark'), css:{'width': '35%'}});
 	});
+	
+  //tambahan untuk tombol back
+  $("#inputnomor button[name='back']").click(function(){
+  	menu.pop();
+  	harga.pop();
+  	if(nomorinput.length>menu.length){
+  		nomorinput.length=menu.length;
+  	}
+  	if(remark.length>menu.length){
+  		remark.length=menu.length;
+  	}
+  	$.unblockUI();
+  	$('#menumakanan').hide();
+  	$('#grupmakanan').show();
+  	populateGroup();
+  	});
 	
 	$('#dinein-remark button[name="ok"]').click(function(){
 		$.unblockUI();
@@ -1548,6 +1564,7 @@ $(document).ready(function(){
 		order.remark = remark;
 		order.printstatus = "printed";
 		order.id = editorder.orderid;
+		order.jenisorder = editorder;
 		strJSON = JSON.stringify(order);
 		alert(strJSON);
 		if(editorder.status == false){
@@ -1558,6 +1575,8 @@ $(document).ready(function(){
 		else if(editorder.status == true){
 			$.getJSON("http://localhost/ajaxlogin.php?cmd=editorderrecall",{data:strJSON},function(data){
 				//alert(JSON.stringify(data));
+     	editorder.status=false;
+     	editorder.orderid=0;
 			});
 			}
 		//clear the variables
