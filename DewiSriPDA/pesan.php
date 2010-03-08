@@ -24,18 +24,20 @@ $(document).ready(function() {
 	}
 	
 	$("#pesan_btn").click(function(){
+		$("#s_jenis_pesanan").val("baru");
+		//alert($("#s_jenis_pesanan").val());
 		pesanan_baru();
 	});
 	
 	$("#repeat_btn").click(function(){
 		//alert("baru");
-		//pesanan_baru();
-		$("#index_container").hide();
-		$("#repeat_container").show();
+		$("#s_jenis_pesanan").val("repeat");
+		//alert($("#s_jenis_pesanan").val());
+		pesanan_baru();
 	});
 	
-	$("#repeat_meja_btn").click(function(){
-		alert("oke");
+	$("#status_pembayaran_btn").click(function(){
+		window.location.replace("status.php");
 	})
 	
 	/* end buchin */
@@ -243,7 +245,10 @@ $(document).ready(function() {
 </script>
 <?php ds_content(); ?>
 <?php if ($_GET["sukses"] == "true"): ?>
-	<h2>Pesanan Tersimpan !</h2>
+	<h2>Status Pesanan:</h2>
+	<p><?
+	echo $_GET["pesan"];
+	?></p>
 	<hr>
 <?php endif; ?>
 
@@ -257,20 +262,7 @@ $(document).ready(function() {
 	<div class="content">
 		<input id="pesan_btn" type="button" class="index" value="Pesan Baru" />
 		<input id="repeat_btn" type="button" class="index" value="Pesanan Lama" />
-	</div>
-	
-</div>
-
-<div id="repeat_container" class="container" style="display:none">
-	<div class="header">
-		<h2 class="header_left">Tambah Pesanan</h2>
-		<div style="clear:both"></div>
-	</div>
-	<div class="content">
-		<input id="repeat_meja_btn" type="button" class="index" value="Pilih Meja" />
-		<?php
-			echo "test";
-		?>
+		<input id="status_pembayaran_btn" type="button" class="index" value="Status Pembayaran" />
 	</div>
 	
 </div>
@@ -431,6 +423,7 @@ $(document).ready(function() {
 	<input type="hidden" id="s_nomor_meja" name="nomor_meja" value="" />
 	<input type="hidden" id="s_jumlah_tamu" name="jumlah_tamu" value="" />
 	<input type="hidden" id="s_pesanan" name="pesanan" value="" />
+	<input type="hidden" id="s_jenis_pesanan" name="jenis_pesanan" value="" />
 	<input type="submit" id="s_simpan"  value="Simpan Pesanan" />
 	
 </form>		

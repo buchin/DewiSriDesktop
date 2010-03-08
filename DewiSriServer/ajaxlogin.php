@@ -264,7 +264,16 @@ session_start();
 			$jum = json_decode($_GET['data']);
 			delPayout($jum);
 			break;
+		case 'getUnprintedOrderID':
+			getUnprintedOrderID();
+			break;
 		}
+function getUnprintedOrderID()
+{		
+	require 'inc/init.php';
+	$query = "SELECT distinct(ordermenu.orderid) as orderid from `ordermenu`,`order` where ordermenu.printstatus is null and order.open like '" . date('Y-m-d') . "%' and ordermenu.orderid = order.id order by ordermenu.orderid asc";
+	echo json_encode($adapter->get($query));
+}
 function delPayout($data)
 {
 	# code...
@@ -934,6 +943,7 @@ function editorderrecall($data){
 		$ordermenu->jumlah = $jumlah[$i];
 		$ordermenu->harga = $harga[$i];
 		$ordermenu->remark = $remark[$i];
+		$ordermenu->printstatus = "printed";
 		$ordermenuid = $redbean->store($ordermenu);
 		}
 	

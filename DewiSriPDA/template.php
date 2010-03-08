@@ -14,6 +14,17 @@ function ds_header() {
 		<meta content="width=240; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" name="viewport"/>
 		<link rel="stylesheet" href="style.css" type="text/css" media="all" />
 		<script type="text/javascript" src="jquery-latest.min.js"></script>
+		<script type="text/javascript">
+		   function changeScreenSize(w,h)
+		     {
+		       window.resizeTo( w,h )
+		     }
+			$(document).ready(function(){
+			  // Your code here...
+				changeScreenSize(380,500);
+			});
+		</script>
+		
 <?php
 }
 

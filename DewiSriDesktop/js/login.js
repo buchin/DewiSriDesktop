@@ -30,10 +30,10 @@ $(document).ready(function(){
 	
 	//clock();
 	$.blockUI({ message: $('#formlogin') }); 
-	$("#timer").jclock();
+	$(".timer").jclock();
 	//var d=new Date();
 	//alert(d.toLocaleDateString());
-	$("#datetimenow").html(showclock());
+	$(".datetimenow").html(showclock());
 	
 	$(".dialog").dialog();
 	$(".dialog").dialog('close');

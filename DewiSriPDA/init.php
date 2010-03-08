@@ -35,7 +35,6 @@ else {
 	$toolbox = RedBean_Setup::kickstartDev($dsn, $username, $password);
 }
 
-
 //Extracting tools for you
 $redbean = $toolbox->getRedBean();
 $db = $toolbox->getDatabaseAdapter();
