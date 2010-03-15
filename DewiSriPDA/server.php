@@ -83,7 +83,7 @@ elseif ($_GET["mode"] == "pesan" && $_POST["jenis_pesanan"] =="repeat"):
 			$insert_pesan->orderid = $orderid;
 			$insert_pesan->menu = $namamenu;
 			$insert_pesan->jumlah = $jumlah;
-			$insert_pesan->remark = $remark;
+			$insert_pesan->remark = $remark . " -tambahan";
 			$insert_pesan->harga = $harga;// * ($jumlah * 1);
 			$redbean->store($insert_pesan);
 
