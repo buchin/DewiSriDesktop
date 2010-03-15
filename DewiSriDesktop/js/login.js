@@ -1575,8 +1575,8 @@ $(document).ready(function(){
 		else if(editorder.status == true){
 			$.getJSON("http://localhost/ajaxlogin.php?cmd=editorderrecall",{data:strJSON},function(data){
 				//alert(JSON.stringify(data));
-     	editorder.status=false;
-     	editorder.orderid=0;
+     			editorder.status=false;
+		    	editorder.orderid=0;
 			});
 			}
 		//clear the variables
@@ -1608,28 +1608,28 @@ $(document).ready(function(){
 	
 	function getPegawai(){
 			$.getJSON("http://localhost/ajaxlogin.php?cmd=getpegawai", function(data){
-			$("#pegawaitable").jqGrid({ 
-				datatype: "local", 
-				height: 250, 
-				colNames:['ID','Username', 'Jabatan'], 
-				colModel:[ 
-						  {name:'id',index:'id', width:60, sorttype:"int"}, 
-						  {name:'username',index:'username', width:90}, 
-						  {name:'role',index:'role', width:100}
-						  ], 
-				multiselect: false, 
-				caption: "Pilih Pegawai" 
-			});
-			$("#pegawaitable").jqGrid('clearGridData');
-			//$("#pegawaitable").jqGrid('addJSONData', JSON.stringify(data));
-			/*var mygrid=$("#pegawaitable")[0];
-			mygrid.addJSONData(data[0]);*/
-			var oke = 0;
-			$.each(data, function(i,val){
-				////alert(JSON.stringify(val));
-				$("#pegawaitable").jqGrid('addRowData', oke,val);
-				oke++;
-			});
+				$("#pegawaitable").jqGrid({ 
+					datatype: "local", 
+					height: 250, 
+					colNames:['ID','Username', 'Jabatan'], 
+					colModel:[ 
+							  {name:'id',index:'id', width:60, sorttype:"int"}, 
+							  {name:'username',index:'username', width:90}, 
+							  {name:'role',index:'role', width:100}
+							  ], 
+					multiselect: false, 
+					caption: "Pilih Pegawai" 
+				});
+				$("#pegawaitable").jqGrid('clearGridData');
+				//$("#pegawaitable").jqGrid('addJSONData', JSON.stringify(data));
+				/*var mygrid=$("#pegawaitable")[0];
+				mygrid.addJSONData(data[0]);*/
+				var oke = 0;
+				$.each(data, function(i,val){
+					////alert(JSON.stringify(val));
+					$("#pegawaitable").jqGrid('addRowData', oke,val);
+					oke++;
+				});
 			});
 		}
 	
