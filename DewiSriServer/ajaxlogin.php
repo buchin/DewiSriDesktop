@@ -267,6 +267,9 @@ session_start();
 		case 'getUnprintedOrderID':
 			getUnprintedOrderID();
 			break;
+		case 'setPrintStatusShiftIni':
+			setPrintStatusShiftIni();
+			break;
 		}
 function getUnprintedOrderID()
 {		
@@ -285,9 +288,25 @@ function getPenjualanHariIni()
 {
 	# code...
 	require 'inc/init.php';
-	$q = "SELECT ordermenu.menu as namamenu, ordermenu.harga as harga, sum(ordermenu.jumlah) as jumlah, (sum(ordermenu.jumlah)*harga) as total  FROM `ordermenu`,`order` where ordermenu.orderid = order.id and order.status='completed' and order.completed like '" . date('Y-m-d') . "%' group by namamenu";
+	$q = "SELECT ordermenu.menu as namamenu, ordermenu.harga as harga, sum(ordermenu.jumlah) as jumlah, (sum(ordermenu.jumlah)*harga) as total  FROM `ordermenu`,`order` where ordermenu.orderid = order.id and order.status='completed' and ordermenu.shiftprintstatus is null and order.completed like '" . date('Y-m-d') . "%' group by namamenu";
 	echo json_encode($adapter->get($q));
 }
+
+function setPrintStatusShiftIni()
+{
+	require 'inc/init.php';
+	$q = "select ordermenu.id from `ordermenu`, `order` where ordermenu.orderid = order.id and order.status = 'completed' and ordermenu.shiftprintstatus is null and order.completed like '" . date('Y-m-d') . "%' ";
+	$keys = $adapter->getCol($q);
+	$semuaordermenu = $redbean->batch("ordermenu",$keys);
+	foreach ($semuaordermenu as $ordermenu) {
+		$ordermenu->shiftprintstatus = 'printed';
+		$redbean->store($ordermenu);
+	}
+	$return = array(
+	'status' => 'sukses'
+	);
+}
+
 function delOrderMenuByOrderID($data){
 	//echo json_encode($data);
 	require("inc/init.php");

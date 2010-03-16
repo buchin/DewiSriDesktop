@@ -35,8 +35,11 @@ $(document).ready(function(){
 		populatePenjualan('hari');
 		$.blockUI({message:$("#oppenjualan")});
 	});
-	$('#oppenjualan button[name="print"]').click(function() {		
-		printLaporanPenjualan("Laporan Penjualan", 'css/print.css');	
+	$('#oppenjualan button[name="print"]').click(function() {
+		printLaporanPenjualan("Laporan Penjualan Shift", 'css/print.css');	
+		$.getJSON("http://localhost/ajaxlogin.php?cmd=setPrintStatusShiftIni", function(data){
+			
+		});	
 	});
 	function populatePenjualan(tipe){
 		$("#oppenjualantable").jqGrid({ 
@@ -51,7 +54,7 @@ $(document).ready(function(){
 								  {name:'total',index:'total', width:150}
 								  ], 
 						multiselect: false, 
-						caption: "Laporan Penjualan",
+						caption: "Laporan Penjualan Shift",
 						onSelectRow: function(id){
 							//var ret = $('#opsalreporttable').jqGrid('getRowData',id);
 							//username = ret.username;
